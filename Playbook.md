@@ -402,6 +402,22 @@ PLAY RECAP *********************************************************************
 
 
 
+# otros ejemplos 
+
+```
+- name: Guardar fecha y hora en un archivo
+  hosts: tu_servidor
+  tasks:
+    - name: Obtener la fecha y hora actual
+      set_fact:
+        current_datetime: "{{ ansible_date_time.iso8601 }}"
+
+    - name: Crear el archivo txt con la fecha y hora actual
+      template:
+        src: templates/datetime_template.txt  # Puedes crear este archivo en tu directorio de templates
+        dest: /ruta/del/destino/fecha_y_hora.txt
+```
+
 ### Bibliografía extras:
 List of Behavioral Inventory Parameters ->  https://docs.ansible.com/archive/ansible/2.4/intro_inventory.html <br>
 
