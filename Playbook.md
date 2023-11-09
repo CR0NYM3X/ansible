@@ -2,7 +2,9 @@
 Es el archivo con extension playbook.yml que indica que actividad va realizar un grupo de host o un host en especifico,  yamel  utiliza el  motor de plantillas jinja de python para trabajar con el archivo utilizando condicionales, bucles, etc,etc, 
 
 <br>
-para agregar un comentario en el playbook se utiliza el carácter **#**   
+para agregar un comentario en el playbook se utiliza el carácter '#'
+<br>
+modulos: https://docs.ansible.com/ansible/2.8/user_guide/modules.html
 
 # Ejemplos de configuracion Playbook
 
