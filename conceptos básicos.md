@@ -4,7 +4,10 @@ Es una herramienta de automatización de código abierto que se utiliza principa
 - con ansible existen muchos modulos ya programados para que los utilices, sin necesidad de que crees toda una shell, puedes consultar modulos en las paginas:<br><br>
 
 -> Modulos de ansible: https://docs.ansible.com/ansible/2.9/modules/list_of_all_modules.html<br>
--> Modulos de la comunidad:  https://galaxy.ansible.com 
+-> Modulos de la comunidad:  https://galaxy.ansible.com <br><br>
+
+Documentación Oficial: https://docs.ansible.com/ansible/latest/index.html
+
 
 
 ### Rutas de los archivo ansible
