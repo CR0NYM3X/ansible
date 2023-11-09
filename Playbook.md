@@ -205,7 +205,21 @@ Playbook :
 Ejecutar:<br>
 `[NOTA]` el parametro **-i inventario.yml** se agrega en caso de tener un inventario ya realizado 
 ```
-ansible-playbook -i inventario.yml ping3.yml
+# Comando: 
+ansible-playbook -i inventario.yml ping3.yml 
+
+# Puedes usar este parametro para validar si el playbook esta bien antes de ejecutar
+--syntax-check
+
+# si son varios servidores puedes usar este parametr para que trabaje en paralelo, el dafaul son 5
+-f FORKS
+
+# En caso de querer especificar los host puede usar este parametro
+-l servidor1,servidor2,servidor3,...,servidor20
+-l tiendas[1:20]
+
+# si tiene contraseñas encriptadas puedes usar esto
+--ask-vault-password
 ```
 
 Resultado que se imprime en consola:
