@@ -163,42 +163,29 @@ ansible-inventory -i op.yml --graph
 
 ```
 
-creamos el archivo ** vars2.yml** donde estara la contraseña
-```
-my_test_var: !vault |
-          $ANSIBLE_VAULT;1.1;AES256
-          64633639346338313134313938326666366566636364366666353065363432353030656364356464
-          6338363464653835303161303032376462663862663635610a613736383730373036633365346564
-          66306636633130373966353062636133376239383337383938386438363437376434386165623561
-          3038656637643136330a636234383633366332363338343735376230656537356463303833393465
-          33623062333139666130396339366335343131376137376366656539343562393233
-
-```
-
-
 
 **4.-** Crear un playbook básico para el inventario:
 <br> Ejecutamos el comando : **`vim /tmp/playbook.ini`** y pegamos el siguiente texto
 ```
 - name: Realizar ping a los servidores
   hosts: "webserver1"
-  vars_files:
-        - vars2.yml # aqui esta la password
   vars:
-        ansible_password: "{{ my_test_var }}"
+        variable_en_playbook: Contenido_variable
   tasks:
     - name: hacer ping
       ping:
     - name: mostrar variables
       debug:
-        msg: "este mensaje {{ db_password }} -- {{ my_port }} --- "
+        msg: "este mensaje {{ variable_custom }} --- {{ variable_en_playbook }} "
 
 ```
+
 **3.-** Ejecutamos el playbook
 Pedira la contraseña del voult, la colocamos y listo
 ```
 ansible-playbook -i inventorio.yml playbook.yml --ask-vault-password
 ```
+
 
 # Inventarios avanzado:
 puedes utilizar las plantillas Jinja2 en archivos de inventario YAML para definir configuraciones dinámicas o variables condicionales.
