@@ -384,3 +384,24 @@ PLAY RECAP *********************************************************************
 127.0.0.1                  : ok=18   changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 
 ```
+
+
+
+
+### Bibliografía extras:
+List of Behavioral Inventory Parameters ->  https://docs.ansible.com/archive/ansible/2.4/intro_inventory.html <br>
+
+Best Practices -> https://docs.ansible.com/archive/ansible/2.4/playbooks_best_practices.html#best-practices-for-variables-and-vaults <br>
+
+
+Build Your Inventory --> https://docs.ansible.com/ansible/latest/network/getting_started/first_inventory.html <br>
+
+
+
+/ejemplos-ansible/ --> https://github.com/pepesan/ejemplos-ansible/blob/master/26_tests/01_tests.yaml#L144 <br>
+
+
+Special Variables  --> https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.html <br>
+ 
+loops --> https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_loops.html 
+
