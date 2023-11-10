@@ -416,22 +416,81 @@ PLAY RECAP *********************************************************************
       template:
         src: templates/datetime_template.txt  # Puedes crear este archivo en tu directorio de templates
         dest: /ruta/del/destino/fecha_y_hora.txt
+
+
+#Los "lookups" son utilizados para recuperar datos y no para realizar configuraciones directas
+
+- name: Utilizar un lookup simple
+  debug:
+    msg: "El sistema operativo es {{ lookup('env', 'OSTYPE') }}"
+
+- name: Leer contenido de un archivo
+  debug:
+    msg: "Contenido del archivo: {{ lookup('file', '/ruta/al/archivo.txt') }}"
+
+- name: Crear un hash de contraseña
+  debug:
+    msg: "Contraseña hasheada: {{ lookup('password', '/dev/null') }}"
+
+- name: Obtener datos de variables
+  debug:
+    msg: "Valor de la variable: {{ lookup('vars', 'mi_variable') }}"
+
+
+```
+
+
+# info extra
+```
+- name: Ejemplo de expresiones condicionales en Ansible desde el inventario
+  hosts: all
+  gather_facts: true
+  tasks:
+    - name: Imprimir información del servidor
+      debug:
+        msg: |
+          {{ '*** Datos del servidor ***' }}
+          Hostname: {{ inventory_hostname }}
+          IP: {{ hostvars[inventory_hostname].ansible_host }}
+          Entorno: {% if hostvars[inventory_hostname].is_production %} Producción {% else %} Staging {% endif %}
+
+
+```
+
+**Usando  plantillas** 
+```
+
+--- arcivo: frontend_proxy_config.j2
+# frontend_proxy_config.j2
+{% for host in groups['app_servers'] %}
+  server {{ hostvars[host]['ansible_host'] }}:80;
+{% endfor %}
+
+
+--- archivo : playbook.yml
+- name: Configurar servidor proxy frontal
+  hosts: frontend_proxy
+  tasks:
+    - name: Configurar proxy para los servidores de la aplicación
+      template:
+        src: templates/frontend_proxy_config.j2
+        dest: /etc/nginx/sites-available/frontend_proxy
+
+
+Este ejemplo generará una configuración para el servidor proxy frontal con las direcciones
+IP de los servidores de la aplicación. La expresión {{ hostvars[host]['ansible_host'] }}
+accede a la dirección IP de cada servidor en el grupo app_servers.
+
+El archivo resultante se copiará en el destino
+
 ```
 
 ### Bibliografía extras:
 List of Behavioral Inventory Parameters ->  https://docs.ansible.com/archive/ansible/2.4/intro_inventory.html <br>
-
 Best Practices -> https://docs.ansible.com/archive/ansible/2.4/playbooks_best_practices.html#best-practices-for-variables-and-vaults <br>
-
-
 Build Your Inventory --> https://docs.ansible.com/ansible/latest/network/getting_started/first_inventory.html <br>
-
-
-
-/ejemplos-ansible/ --> https://github.com/pepesan/ejemplos-ansible/blob/master/26_tests/01_tests.yaml#L144 <br>
-
-
+ejemplos-ansible/ --> https://github.com/pepesan/ejemplos-ansible/blob/master/26_tests/01_tests.yaml#L144 <br>
 Special Variables  --> https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.html <br>
- 
+Discovering variables: facts and magic variables -> https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_vars_facts.html  <br>
 loops --> https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_loops.html 
 
