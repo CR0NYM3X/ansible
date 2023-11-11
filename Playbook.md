@@ -455,6 +455,9 @@ PLAY RECAP *********************************************************************
           Entorno: {% if hostvars[inventory_hostname].is_production %} Producción {% else %} Staging {% endif %}
 
 
+
+log_path
+
 ```
 
 **Usando  plantillas** 
