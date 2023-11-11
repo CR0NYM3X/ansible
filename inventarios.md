@@ -9,7 +9,7 @@
 
 
 
-### Inventarios .INI
+### Inventarios .INI o  .CFG
 
 Aqui vamos a crer un archivo .ini , aunque ya no son recomendables usarlo ya que en yml tienes mas ventajas <br>
 **[NOTA]** no es recomendable usar las contraseñas en texto plano, mas adelante aprenderemos a cifrarlas 
@@ -105,6 +105,8 @@ ansible -i inventario.ini tiendas -m shell -a "echo hola mundo"
 
 
 # Hacer un inventario.yml
+`[NOTA]` se recomienda encriptar todo el inventario con **ansible-voult encrypt my_inventario.ini** en este ejemplo, no lo vamos encriptar todo, solo vamos encriptar la contraseña y agregarla al inventario
+
 
 **1.-** Encriptar la contraseña
 Encriptamos la contraseña para colocarla en el inventario
