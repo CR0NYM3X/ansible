@@ -475,10 +475,13 @@ log_path
   hosts: frontend_proxy
   tasks:
     - name: Configurar proxy para los servidores de la aplicación
+      ignore_errors: yes
       template:
         src: templates/frontend_proxy_config.j2
         dest: /etc/nginx/sites-available/frontend_proxy
 
+
+condiciones busca la ip en el texto:  when: "'10.44.1.100' in grep_result.stdout_lines"
 
 Este ejemplo generará una configuración para el servidor proxy frontal con las direcciones
 IP de los servidores de la aplicación. La expresión {{ hostvars[host]['ansible_host'] }}
