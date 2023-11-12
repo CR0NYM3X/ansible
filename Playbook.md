@@ -437,6 +437,35 @@ PLAY RECAP *********************************************************************
     msg: "Valor de la variable: {{ lookup('vars', 'mi_variable') }}"
 
 
+
+
+
+### cuando da errores
+- name: Realizar ping a los servidores
+  gather_facts: false
+  hosts: fecha_12_11_2023_hora_15_33_04
+  tasks:
+    - name: hacer ping
+      shell: cat /tmp/test_ansible/ansible_files/aaac.txt
+      register: result
+      delegate_to: localhost
+      changed_when: false
+      ignore_errors: yes
+
+    - name: Guardar errores en un archivo
+      command: echo "{{ result.stderr }}" > /ruta/del/archivo/error_log.txt
+      when: result.failed
+      delegate_to: localhost
+
+    - name: Imprimir variable
+      debug:
+        var: result
+      when: "'pedro' in result.stdout"
+
+
+
+
+
 ```
 
 
