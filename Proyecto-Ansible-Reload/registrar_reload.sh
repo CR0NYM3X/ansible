@@ -20,7 +20,7 @@ status_reload="pendiente"
 ip_pattern="^([0-9]{1,3}\.){3}[0-9]{1,3}$"
 son_numeros="^[0-9]+$"
 pwd_vault=$ruta_program/files_conf/password-voult$(date +%d_%m_%Y).txt
-hora_valida_cambiar_password=00:05 #06:29
+hora_valida_cambiar_password=06:29
 
 # Importando los datos de conexion para la base de datos 
 db_port=$(grep db_port $ruta_program/files_conf/condb.yml | sed 's/.*: //'  | sed -e 's/\"//g' -e 's/ //g')
