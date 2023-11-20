@@ -1,0 +1,108 @@
+- name: Realizar ping a los servidores
+  gather_facts: false
+  ignore_errors: yes
+  hosts: fecha_20_11_2023_hora_13_21_32
+  vars_files:
+      - condb.yml
+  tasks:
+    - name: enviando ping para validar la conexión del servidor
+      ignore_errors: yes
+      ignore_unreachable: true
+      ping:
+      register: fallos_conexion
+
+    - name: guardando errorrr
+      ignore_errors: yes
+      shell: ip_host=$(echo "{{ ansible_host }}");  error_log=$(echo  "Recomendaciones -> validar estos campos si son correctos= ip, puerto, contraseña y que el servidor Local si responda al puerto ssh del servidor cliente |  Error -> {{fallos_conexion.msg  | join('') }}");  psql -h "{{ db_ip }}" -p "{{ db_port }}" -U "{{ db_user }}" -d "{{ db_name }}" -c "UPDATE ansible_reload SET status_reload = 'ERROR', msg_ansible = '$error_log' WHERE ip='$ip_host' and status_reload='pendiente'"
+      #shell:  id_host=$(echo "{{ inventory_hostname_short }}"); $error_log=$(echo "{{ fallos.unreachable  }}") && echo  "aaaa" > /tmp/coneeeeeeee.txt #&& psql -h "{{ db_ip }}" -p "{{ db_port }}" -U "{{ db_user }}" -d "{{ db_name }}" -c "UPDATE ansible_reload SET status_reload = 'ERROR', msg_ansible = '$error_log' WHERE id=$id_host"
+      delegate_to: localhost
+
+      # validando cuando una variable no esta definida 
+      when: fallos_conexion.unreachable is defined and not fallos_conexion.stdout | default(false) 
+    
+    - name: Obtener día actual
+      shell: "date +%d"
+      register: diaactual
+      ignore_errors: yes
+
+    - name: Obtener ruta de los binarios con el data
+      shell: ps -fea | grep /data | grep -v "grep /data"  | grep data | awk '{print  $8 " "  $9  " " $10}' | sed -e  's/\/postgres/\/pg_ctl reload/g' | sed -e '/^$/d'
+      register: binarios_mas_data  
+      changed_when: false
+      ignore_errors: yes
+
+    - name: obtener solo el data
+      shell: ps -fea | grep -v '\-\-color' | grep /data | grep -v ps | awk '{print $10}' | sed -e '/^$/d'
+      register: data
+      changed_when: false
+      ignore_errors: yes
+
+    - name: Hacer reload
+      shell: "{{ item }}"
+      loop: "{{ binarios_mas_data.stdout_lines }}"
+      register: salida_reload
+      ignore_errors: yes
+        
+    - name: imprimir todo el reload
+      ignore_errors: yes
+      debug:
+        var: salida_reload.results | map(attribute='stdout') | list
+
+    - name: obtener la ruta donde se guarda cada log
+      shell: cat "{{ item }}"/postgresql.conf | grep log_directory | awk '{print $3}' | sed -e "s/['\"]//g"
+      loop: "{{ data.stdout_lines }}" 
+      register: ruta_log
+      changed_when: false
+      ignore_errors: yes
+
+
+    - name: Verificando en el log que si se haya realizado el reload
+      ignore_errors: yes
+      debug:
+        var: ruta_log.results | map(attribute='stdout') | list
+
+    - name: verificar si el reload se guardo en el log
+      #shell: "cat {{ item.0 }}/{{ item.1 }}/postgresql-{{ diaactual.stdout }}.log | grep -i SIGHUP -A5 |  tail -n 6 || echo no se encontraron resultados del reload"
+      shell: "if [[ -z $(grep -i SIGHUP -A5 {{ item.0 }}/{{ item.1 }}/postgresql-{{ diaactual.stdout }}.log  | tail -n6 ) ]]; then echo no se encontraron resultados del reload en el log {{ item.0 }}/{{ item.1 }}/postgresql-{{ diaactual.stdout }}.log   ; else grep -i SIGHUP -A5 {{ item.0 }}/{{ item.1 }}/postgresql-{{ diaactual.stdout }}.log  | tail -n6 ; fi"
+      register: log_output
+      changed_when: false
+      with_nested: 
+        - "{{ data.stdout_lines }}"
+        - "{{ ruta_log.results | map(attribute='stdout') | list }}"
+      ignore_errors: yes
+
+    - name: Mostrar log
+      debug:
+          msg: "{{ansible_host}} ---{{ inventory_hostname_short  | regex_replace('.*_(\\d+)', '\\1') }} : {{ log_output.results | map(attribute='stdout') | list }}"
+      ignore_errors: yes
+
+    - name: mostrar salida de reload
+      debug:
+        msg: "{{ inventory_hostname_short  | regex_replace('.*_(\\d+)', '\\1') }} : {{ salida_reload.results | map(attribute='stdout') | list }}"
+      ignore_errors: yes
+     
+    - name: imprimir log
+      debug:
+        var: log_output 
+      ignore_errors: yes
+
+    - name: insertando estatus=hecho y evidencia  en caso de que si se haya realizado el reload 
+      shell: ip_host=$(echo "{{ansible_host}}" ); log_ansible=$(echo "{{ log_output.results | map(attribute='stdout')| join('') }}" | sed -e "s/'/\\\"/g");  echo "UPDATE ansible_reload SET status_reload = 'hecho', msg_ansible = '$log_ansible' WHERE ip='$ip_host' and status_reload='pendiente' ;"  >> /tmp/insert_status_hecho.txt && psql -h "{{ db_ip }}" -p "{{ db_port }}" -U "{{ db_user }}" -d "{{ db_name }}" -t -f /tmp/insert_status_hecho.txt && rm /tmp/insert_status_hecho.txt
+      changed_when: false
+      delegate_to: localhost
+      ignore_errors: yes
+      when: " 'SIGHUP' in  log_output.results | map(attribute='stdout') |  join('')  and  'not reloaded' not in  log_output.results | map(attribute='stdout') |  join('') and log_output.results | map(attribute='stdout') | join('') | length > 0 " 
+      #when: log_output.results | map(attribute='stdout') | join('') | length > 0  or "'not reloaded' not in log_output.results.stdout"
+      
+
+    - name: insertando status=error y evidencia en caso de que no se haya realizado el reload
+      shell: ip_host=$(echo "{{ansible_host}}" ); log_ansible=$(echo "Este es el mensaje que arroja al hacer el reload =  {{ inventory_hostname_short  }} -> {{ salida_reload.results | map(attribute='stdout') | list }} | log Posible Error    -->  {{ log_output.results | map(attribute='stdout')| join('') }}" | sed -e "s/'/\\\"/g");  echo "UPDATE ansible_reload SET status_reload = 'ERROR', msg_ansible = '$log_ansible' WHERE ip='$ip_host' and status_reload='pendiente';"  >> /tmp/insert_status_error.txt && psql -h "{{ db_ip }}" -p "{{ db_port }}" -U "{{ db_user }}" -d "{{ db_name }}" -t -f /tmp/insert_status_error.txt && rm /tmp/insert_status_error.txt
+      changed_when: false
+      ignore_errors: yes
+      delegate_to: localhost
+      when: " 'WARNING' in log_output.results | map(attribute='stdout') |  join('') or 'Error' in log_output.results | map(attribute='stdout') |  join('') or 'no se encontraron resultados' in log_output.results | map(attribute='stdout') |  join('') or  'not reloaded' in log_output.results | map(attribute='stdout') |  join('') or log_output.results | map(attribute='stdout') | join('') | length == 0 "
+      #when: log_output.results | map(attribute='stdout') | join('') | length == 0 or "'not reloaded' in log_output.results.stdout"
+
+
+
+
