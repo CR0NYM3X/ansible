@@ -1,14 +1,86 @@
 # Objetivo del proyecto
+Es realizar los realoads en los servidores postgresql de forma automatizada, eficiente y rápida 
+
+### Ventajas: 
+**1.-** Es seguro ya que la contraseña de cada servidor es encryptada con el mismo ansible, la contraseña que se utiliza para desencriptarla, se genera una nueva contraseña cada dia y borra la contraseña anterior, esto lo hace despues de las 6:30am <br>
+**2.-** Ya no es necesario conectarse a cada servidor de manera manual y documentar esto en un excel <br>
+**3.-** Disminuye el tiempo de ejecucion <br>
+**4.-** Coloca Evidencia de cada reload en cada IP que se le realiza el reload <br>
+**5.-** Realizar dobles reload en un servidor, este en el caso de que alguien anexe dos veces el mismo servidor para realizarle el reload  <br>
+**6.-** Disminuye  la sobrecarga de trabajo de los colaboradores del turno nocturno <br>
+
+### Dentajas: 
+**1.-** Una vez ejecutada la automaticacion, minimo una persona del turno nocturno, debe de validar los servidores que se quedaron con estatus Error para verificar, porque motivo no se pudo realizar el reload
 
 
+# Ejemplos de uso:
 
-### Imagenes
+### **1.-** Creamos la base de datos y la tabla que se va ocupar para realizar el registro :
+ ```
+ create database aplicativo_test;
+\c aplicativo_test
+ 
+ 
+ CREATE TABLE public.ansible_reload (
+    id serial primary key,
+    fecha timestamp without time zone DEFAULT to_char(now(), 'YYYY-MM-DD HH24:MI:SS')::timestamp ,
+    TI INT,
+	IP varchar(15),
+	numemp int,
+	pswd_vault text,
+	status_reload varchar(255), 
+	status_pgbouncer varchar(255), 
+	msg_usuario text, 
+	msg_ansible text,
+	port int  
+);
+```
 ![Creando_la_dba](https://raw.githubusercontent.com/CR0NYM3X/ansible/main/Proyecto-Ansible-Reload/img/Creando_la_dba.PNG)
+
+### 2.- agregamos el script al crontab:
+Abres el editor del cron con el comando : **`crontab -e`**   después colocas en una luena línea la tarea programada
+```
+#Tarea Programada reloads automáticos: 
+0 2 * * * /tmp/test_ansible/ansible_files/generar_ansible.sh >> /tmp/test_ansible/ansible_files/logs/log$(date +%d_%m_%Y).log 2>&1
+```
 ![crontab.PNG](https://raw.githubusercontent.com/CR0NYM3X/ansible/main/Proyecto-Ansible-Reload/img/crontab.PNG)
 
+
+### 3.- Configuramos los datos de conexión para la base de datos: 
+El archivo se encuentra dentro del proyecto en la ruta: ansible_files/files_conf/condb.yml <br>
+![condb.PNG](https://raw.githubusercontent.com/CR0NYM3X/ansible/main/Proyecto-Ansible-Reload/img/condb.PNG)
+
+### 4.- Realizamos nuestro primer registro :
+Ejecutamos el bash **`registrar_reload.sh`** que se encuentra dentro del proyecto ansible_files, y nos preguntara los datos, sólo los ingresamos y al final nos mostrará todos los datos ingresados en la base de datos <br>
 ![Cregistrar_reload.PNG](https://raw.githubusercontent.com/CR0NYM3X/ansible/main/Proyecto-Ansible-Reload/img/registrar_reload.PNG)
 
+
+
+### Proyecto Ansible_files
 ![archivos_principales](https://github.com/CR0NYM3X/ansible/blob/main/Proyecto-Ansible-Reload/img/archivos_principales.PNG)
+
+### Archivos de configuración de la herramienta:
+No es necesario mover ningún archivo para el proyecto, en excepción del archivo condb.yml que se explica en paso #3 <br>
+
+Pequeña descripción de cada archivo: <br>
+
+**`banner.conf`** se configura el banner que va mostrar la aplicación al ejecutarse <br>
+**`condb.yml`** datos importantes para conectarse a la base de datos  como ip, puerto etc. <br>
+**`DatosPrograma.conf`**  Estan las variables donde indican la version, el autor y la hora en la que se va generar una nueva contraseña<br>
+**`password-voult20_11_2023.txt`** Es donde se guarda la contraseña que encripta las contraseñas de cada servidor <br>
+**`playbook.yml`** Es el playbook encargado de mandar a realizar las tareas a cada servidor que se agrego en la tabla ansible_reload con estatus pendiente  <br>
+
 
 ![files_conf.PNG](https://raw.githubusercontent.com/CR0NYM3X/ansible/main/Proyecto-Ansible-Reload/img/files_conf.PNG)
 
+
+### Funcionamiento: 
+
+### Futuras Actualizaciones:
+1.- Manejo de grupos para playbooks, ejemplos de grupos *``[ Reload_Playbook.yml , Instalaciones_Playbook.yml , agregar_pg_hba.yml, validacion_espacios.yml ]``* <br>
+2.- Indicar un tiempo de ejecucion <br>
+3.- Agregar usuarios al archivo pg_hba.conf
+4.- Mejor manejo y validación de los Errores 
+
+
+---- Cambiar la fecha de generacion de contraseñas 
