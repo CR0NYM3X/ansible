@@ -9,7 +9,7 @@ Es realizar los realoads en los servidores postgresql de forma automatizada, efi
 **5.-** Realizar dobles reload en un servidor, este en el caso de que alguien anexe dos veces el mismo servidor para realizarle el reload  <br>
 **6.-** Disminuye  la sobrecarga de trabajo de los colaboradores del turno nocturno <br>
 
-### Dentajas: 
+### Desventajas: 
 **1.-** Una vez ejecutada la automaticacion, minimo una persona del turno nocturno, debe de validar los servidores que se quedaron con estatus Error para verificar, porque motivo no se pudo realizar el reload
 
 
@@ -56,7 +56,15 @@ Ejecutamos el bash **`registrar_reload.sh`** que se encuentra dentro del proyect
 
 
 
-### Proyecto Ansible_files
+### Proyecto Ansible_files 
+Pequeña descripción de cada archivo: <br>
+**`files_conf`**  Es la caperta que guarda las configuraciones importantes para que la herramienta funciones  <br>
+**`generar_ansible.sh`**  Es un bash el encargado de generar el inventario con los servidores con estatus pendiente y mandar llamar el playbook para que realice el reload  <br>
+**`Img`**  es la carpeta donde se guardan las imagenes del ejemplo <br>
+**`inventarios`** Es la carpeta donde se guardan los host con estatus pendientes, este archivo se genera cada dia y en caso de ejecutar bash generar_ansible.sh mas de 2 veces al dia, este se agrega al archivo ya existente  <br> 
+**`logs`**  es donde se guardan los log del archivo generar_ansible.sh  en caso de un error o validar porque no se realizo el reaload a un servidor  <br>
+**`registrar_reload.sh`** Es el bash que se usa para registrar los servidores en la base de datos, para que el bash generar_ansible.sh  en la madrugada consulte esos host con estatus pendiente y realice los reloads     <br>
+
 ![archivos_principales](https://github.com/CR0NYM3X/ansible/blob/main/Proyecto-Ansible-Reload/img/archivos_principales.PNG)
 
 ### Archivos de configuración de la herramienta:
@@ -74,7 +82,7 @@ Pequeña descripción de cada archivo: <br>
 ![files_conf.PNG](https://raw.githubusercontent.com/CR0NYM3X/ansible/main/Proyecto-Ansible-Reload/img/files_conf.PNG)
 
 
-### Funcionamiento: 
+### Funcionamiento de la herramienta: 
 
 ### Futuras Actualizaciones:
 1.- Manejo de grupos para playbooks, ejemplos de grupos *``[ Reload_Playbook.yml , Instalaciones_Playbook.yml , agregar_pg_hba.yml, validacion_espacios.yml ]``* <br>
