@@ -6,7 +6,7 @@ inventario=$ruta_program/inventarios/inventario$(date +%d_%m_%Y).yml
 playbook=$ruta_program/files_conf/playbook.yml
 grupo=$(date +fecha_%d_%m_%Y_hora_%H_%M_%S)
 pwd_vault=$ruta_program/files_conf/password-voult$(date +%d_%m_%Y).txt
-hora_valida_cambiar_password=00:04   # 06:29
+hora_valida_cambiar_password=06:29
 
 
 db_port=$(grep db_port $ruta_program/files_conf/condb.yml | sed 's/.*: //'  | sed -e 's/\"//g' -e 's/ //g')
