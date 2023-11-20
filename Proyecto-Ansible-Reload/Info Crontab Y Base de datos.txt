@@ -1,0 +1,32 @@
+
+############# Agregar al crontab #############
+
+0 2 * * * /tmp/test_ansible/ansible_files/generar_ansible.sh >> /tmp/test_ansible/ansible_files/logs/log$(date +%d_%m_%Y).log 2>&1
+
+
+############# Crear la Base de datos #############
+
+ create database aplicativo_test;
+\c aplicativo_test
+ 
+ 
+ CREATE TABLE public.ansible_reload (
+    id serial primary key,
+    fecha timestamp without time zone DEFAULT to_char(now(), 'YYYY-MM-DD HH24:MI:SS')::timestamp ,
+    TI INT,
+	IP varchar(15),
+	numemp int,
+	pswd_vault text,
+	status_reload varchar(255), 
+	status_pgbouncer varchar(255), 
+	msg_usuario text, 
+	msg_ansible text,
+	port int  
+);
+
+
+############# Querys #############
+
+ psql -p 5432 -d aplicativo_test -t -c "select id,ti,ip,status_reload, msg_ansible from ansible_reload"
+ psql -p 5432 -d aplicativo_test -t -c "truncate ansible_reload"
+ psql -p 5432 -d aplicativo_test  -c "update ansible_reload set status_reload='pendiente',msg_ansible=''"
