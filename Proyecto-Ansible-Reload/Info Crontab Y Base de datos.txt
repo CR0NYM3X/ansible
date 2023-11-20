@@ -1,6 +1,8 @@
 
 ############# Agregar al crontab #############
+Abres el editor del cron con el comando : "crontab -e"   despues colocas en una luena linea la tarea programada
 
+#Tarea Programada: 
 0 2 * * * /tmp/test_ansible/ansible_files/generar_ansible.sh >> /tmp/test_ansible/ansible_files/logs/log$(date +%d_%m_%Y).log 2>&1
 
 
