@@ -89,5 +89,5 @@ Pequeña descripción de cada archivo: <br>
 2.- Indicar un tiempo de ejecucion <br>
 3.- Agregar usuarios al archivo pg_hba.conf  <br>
 4.- Mejor manejo y validación de los Errores   <br>
-5.- Habilitar la opcion de Pg_bouncer en el playbook
+5.- Habilitar la opcion de Pg_bouncer en el playbook  <br>
 6.- Agregarle para que te pregunte si quieres agergar mas de una ip en el mismo TI
