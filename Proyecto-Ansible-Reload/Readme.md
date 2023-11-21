@@ -63,7 +63,7 @@ En caso de que por algún motivo deseas apresurar la ejecucion de los reload, pu
 
 ### Asi se vera la tabla en un ejemplo real
 
-![log.PNG](https://raw.githubusercontent.com/CR0NYM3X/ansible/main/Proyecto-Ansible-Reload/img/log.PNG)
+![evidencia.png](https://raw.githubusercontent.com/CR0NYM3X/ansible/main/Proyecto-Ansible-Reload/img/evidencia.png)
 
 
 ### Proyecto Ansible_files 
