@@ -1,5 +1,5 @@
 # Objetivo del proyecto
-Es realizar los realoads en los servidores postgresql de forma automatizada, eficiente y rápida 
+Es realizar los realoads de configuración en los servidores productivos postgresql de forma automatizada, eficiente y rápida, esto se realiza a una hora donde hay baja demanda de peticiones, por lo que se recomienda en la madrugada
 
 ### Ventajas: 
 **1.-** Es seguro ya que la contraseña de cada servidor es encryptada con el mismo ansible, la contraseña que se utiliza para desencriptarla, se genera una nueva contraseña cada dia y borra la contraseña anterior, esto lo hace despues de las 6:30am <br>
