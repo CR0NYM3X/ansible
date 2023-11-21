@@ -6,7 +6,7 @@ Es realizar los realoads de configuración en los servidores productivos postgre
 **2.-** Ya no es necesario conectarse a cada servidor de manera manual y documentar esto en un excel <br>
 **3.-** Disminuye el tiempo de ejecucion <br>
 **4.-** Coloca Evidencia de cada reload en cada IP que se le realiza el reload <br>
-**5.-** Realizar dobles reload en un servidor, este en el caso de que alguien anexe dos veces el mismo servidor para realizarle el reload  <br>
+**5.-** No realiza más de una vez el  reload en un servidor, en el caso de que alguien anexe dos veces el mismo servidor para realizarle el reload  <br>
 **6.-** Disminuye  la sobrecarga de trabajo de los colaboradores del turno nocturno <br>
 
 ### Desventajas: 
