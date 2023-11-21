@@ -89,6 +89,4 @@ Pequeña descripción de cada archivo: <br>
 2.- Indicar un tiempo de ejecucion <br>
 3.- Agregar usuarios al archivo pg_hba.conf
 4.- Mejor manejo y validación de los Errores 
-
-
----- Cambiar la fecha de generacion de contraseñas 
+5.- Habilitar la opcion de Pg_bouncer en el playbook
