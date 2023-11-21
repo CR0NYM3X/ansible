@@ -72,11 +72,11 @@ No es necesario mover ningún archivo para el proyecto, en excepción del archiv
 
 Pequeña descripción de cada archivo: <br>
 
-**`banner.conf`** se configura el banner que va mostrar la aplicación al ejecutarse <br>
-**`condb.yml`** datos importantes para conectarse a la base de datos  como ip, puerto etc. <br>
+**`banner.conf`** Se configura el banner que va mostrar la aplicación al ejecutarse <br>
+**`condb.yml`** Datos importantes para conectarse a la base de datos  como ip, puerto etc. <br>
 **`DatosPrograma.conf`**  Estan las variables donde indican la version, el autor y la hora en la que se va generar una nueva contraseña<br>
 **`password-voult20_11_2023.txt`** Es donde se guarda la contraseña que encripta las contraseñas de cada servidor <br>
-**`playbook.yml`** Es el playbook encargado de mandar a realizar las tareas a cada servidor que se agrego en la tabla ansible_reload con estatus pendiente  <br>
+**`playbook.yml`** Es el playbook  es el arhcivo donde viene el codigo que se va ejecutar en cada servidor  <br>
 
 
 ![files_conf.PNG](https://raw.githubusercontent.com/CR0NYM3X/ansible/main/Proyecto-Ansible-Reload/img/files_conf.PNG)
