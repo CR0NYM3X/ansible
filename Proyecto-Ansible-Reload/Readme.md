@@ -56,6 +56,16 @@ Ejecutamos el bash **`registrar_reload.sh`** que se encuentra dentro del proyect
 
 
 
+
+### Ejecutar de manura manual los reload, sin esperar a que lo ejecute el cron
+En caso de que por algún motivo deseas apresurar la ejecucion de los reload, puedes hacerlo de manera manual, tal como se muestra en la imagen 
+![generar_ansible.PNG](https://raw.githubusercontent.com/CR0NYM3X/ansible/main/Proyecto-Ansible-Reload/img/generar_ansible.PNG)
+
+### Asi se vera la tabla en un ejemplo real
+
+![log.PNG](https://raw.githubusercontent.com/CR0NYM3X/ansible/main/Proyecto-Ansible-Reload/img/log.PNG)
+
+
 ### Proyecto Ansible_files 
 Pequeña descripción de cada archivo: <br>
 **`files_conf`**  Es la caperta que guarda las configuraciones importantes para que la herramienta funciones  <br>
