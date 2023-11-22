@@ -100,4 +100,9 @@ Pequeña descripción de cada archivo: <br>
 3.- Agregar usuarios al archivo pg_hba.conf  <br>
 4.- Mejor manejo y validación de los Errores   <br>
 5.- Habilitar la opcion de Pg_bouncer en el playbook  <br>
-6.- Agregarle para que te pregunte si quieres agergar mas de una ip en el mismo TI
+6.- Agregarle para que te pregunte si quieres agergar mas de una ip en el mismo TI  <br>
+7.- Validar en el momento que hace el reload que verifique si retorna la palabras "server signaled" y  coloque el servidor como error, no se pudo hacer el reload  <br>
+8.- Validar que si no encuentra la ruta del data coloque el servidor como error, no se encontro la ruta del binario  <br>
+9.- Validar para que los numeros de empleados si sean validos, y no agregn cualquier otro  <br>
+10.- Recopilar información para tener mas preciso un posible error en los log de postgresql 
+
