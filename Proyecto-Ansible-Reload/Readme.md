@@ -107,7 +107,7 @@ Pequeña descripción de cada archivo: <br>
 
 
 ### Version actual:
-Versión: 1.1 -> 
+Versión: 1.1 | Mejoras: <br>
 ```
  1.- Se agrego un campo en la tabla  ansible_reload, donde se va guardar la ip de la persona que realiza el registro
  2.- Se agrego la validacion de usuario, para que no ingresen números de empleados que no estan registrados,
