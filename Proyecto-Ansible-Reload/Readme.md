@@ -32,7 +32,8 @@ Es realizar los realoads de configuración en los servidores productivos postgre
 	status_pgbouncer varchar(255), 
 	msg_usuario text, 
 	msg_ansible text,
-	port int  
+	port int,
+	ip_cliente varchar(15)
 );
 ```
 ![Creando_la_dba](https://raw.githubusercontent.com/CR0NYM3X/ansible/main/Proyecto-Ansible-Reload/img/Creando_la_dba.PNG)
@@ -100,9 +101,15 @@ Pequeña descripción de cada archivo: <br>
 3.- Agregar usuarios al archivo pg_hba.conf  <br>
 4.- Mejor manejo y validación de los Errores   <br>
 5.- Habilitar la opcion de Pg_bouncer en el playbook y indicar que si se reiniciar el pgbouncer no se hace reload en servidor <br>
-6.- Agregarle para que te pregunte si quieres agergar mas de una ip en el mismo TI  <br>
 7.- Validar en el momento que hace el reload que verifique si retorna la palabras "server signaled" y  coloque el servidor como error, no se pudo hacer el reload  <br>
 8.- Validar que si no encuentra la ruta del data coloque el servidor como error, no se encontro la ruta del binario  <br>
-9.- Validar para que los numeros de empleados si sean validos, y no agreguen cualquier otro  <br>
 10.- Recopilar información para tener mas preciso un posible error en los log de postgresql 
 
+
+### Version actual:
+Versión: 1.1 -> 
+```
+ 1.- Se agrego un campo en la tabla  ansible_reload, donde se va guardar la ip de la persona que realiza el registro
+ 2.- Se agrego la validacion de usuario, para que no ingresen números de empleados que no estan registrados,
+ 3.- Se agrego opcion para ingresar multiples ips en un TI
+```
