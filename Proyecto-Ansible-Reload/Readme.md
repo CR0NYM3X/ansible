@@ -33,7 +33,8 @@ Es realizar los realoads de configuración en los servidores productivos postgre
 	msg_usuario text, 
 	msg_ansible text,
 	port int,
-	ip_cliente varchar(15)
+	ip_cliente varchar(15),
+        playbook  varchar(255)
 );
 ```
 ![Creando_la_dba](https://raw.githubusercontent.com/CR0NYM3X/ansible/main/Proyecto-Ansible-Reload/img/Creando_la_dba.PNG)
@@ -112,4 +113,8 @@ Versión: 1.1 | Mejoras: <br>
  1.- Se agrego un campo en la tabla  ansible_reload, donde se va guardar la ip de la persona que realiza el registro
  2.- Se agrego la validacion de usuario, para que no ingresen números de empleados que no estan registrados,
  3.- Se agrego opcion para ingresar multiples ips en un TI
+```
+Versión: 1.2 | Mejoras: <br>
+```
+ 1.- Te permite seleccionar que playbook quieres usar, se habilito la opción y ya funciona solo le hace falta mejoras esta en  [Beta]
 ```
