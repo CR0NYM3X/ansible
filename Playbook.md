@@ -61,6 +61,29 @@ Playbook :
     ####   Trabajando con bucles
     ####   bibliografía: https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_loops.html
 
+
+
+    - name: Mostrar dirección IP y nombre de la base de datos
+      debug:
+        msg: "La dirección IP es {{ item.ip }} y la base de datos es {{ item.base_de_datos }}"
+      loop: "{{ datos2 }}"
+      vars:
+        datos2:
+         - { ip: "192.168.1.100", base_de_datos: "db1" }
+         - { ip: "192.168.1.101", base_de_datos: "db2" }
+         - { ip: "192.168.1.102", base_de_datos: "db3" }
+         - { ip: "192.168.1.103", base_de_datos: "db4" }
+         - { ip: "192.168.1.104", base_de_datos: "db5" }
+         - { ip: "192.168.1.105", base_de_datos: "db6" }
+         - { ip: "192.168.1.106", base_de_datos: "db7" }
+         - { ip: "192.168.1.107", base_de_datos: "db8" }
+         - { ip: "192.168.1.108", base_de_datos: "db9" }
+         - { ip: "192.168.1.109", base_de_datos: "db10" }
+
+    
+
+
+
         #Este bucle te permite tener el nombre del key y su valor
     - name: Usar loop con with_dict
       debug:
