@@ -96,7 +96,7 @@ Pequeña descripción de cada archivo: <br>
 ### Funcionamiento de la herramienta: 
 
 ### Futuras Actualizaciones:
-1.- Manejo de grupos para playbooks, ejemplos de grupos *``[ Reload_Playbook.yml , Instalaciones_Playbook.yml , agregar_pg_hba.yml, validacion_espacios.yml ]``* <br>
+1.- Manejo de grupos para playbooks, ejemplos de grupos *``[ Reload_Playbook.yml , Instalaciones_Playbook.yml , agregar_pg_hba.yml, validacion_espacios.yml , instalar_parches_windows.yml ]``* <br>
 2.- Indicar un tiempo de ejecucion <br>
 3.- Agregar usuarios al archivo pg_hba.conf  <br>
 4.- Mejor manejo y validación de los Errores   <br>
