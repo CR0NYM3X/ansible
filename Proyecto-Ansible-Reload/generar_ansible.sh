@@ -76,7 +76,7 @@ echo "
           ansible_host: $ip
           ansible_user: postgres
           ansible_port:$port
-         $pass " >> $inventario
+        $pass " >> $inventario
 
 done
 
