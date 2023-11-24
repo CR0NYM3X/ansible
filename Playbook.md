@@ -223,6 +223,14 @@ Playbook :
 #       dest: /ruta/local/
 #       flat: yes
 
+
+############### Windows
+
+- name: Ejecutar consulta SQL
+            win_shell: 
+            register: sql_query_result
+
+
 ```
 
 Ejecutar:<br>
