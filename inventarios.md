@@ -202,6 +202,11 @@ ansible_winrm_authentication=basic
 Para conexiones HTTP: el puerto predeterminado es el 5985.
 Para conexiones HTTPS: el puerto predeterminado es el 5986.
 
+--- para ver la configuracion de winrm
+winrm get winrm/config
+
+-- para ver si esta instalado
+https://learn.microsoft.com/es-es/windows/win32/winrm/installation-and-configuration-for-windows-remote-management
 
 ```
 
