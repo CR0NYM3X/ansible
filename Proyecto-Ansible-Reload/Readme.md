@@ -105,7 +105,7 @@ Pequeña descripción de cada archivo: <br>
 7.- Validar en el momento que hace el reload que verifique si retorna la palabras "server signaled" y  en caso de que no, coloque el servidor con status: error, con mensaje : no se pudo hacer el reload  <br>
 8.- Validar que si no encuentra la ruta del data coloque el servidor como error, no se encontro la ruta del binario  <br>
 10.- Recopilar información para tener mas preciso un posible error en los log de postgresql 
-
+11.- Habilitar para que puedas especificar el usuario
 
 ### Version actual:
 Versión: 1.1 | Mejoras: <br>
