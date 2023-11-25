@@ -1,0 +1,23 @@
+- name: Validar espacios de Mongo, Voltdb, postgresql etc.
+  gather_facts: false
+  ignore_errors: yes
+  hosts: fecha_25_11_2023_hora_11_25_39
+  vars_files:
+      - ../condb.yml
+  tasks:
+    - name: Consultando el tamaño de disco de cada servidor
+      ignore_errors: yes
+      ignore_unreachable: true
+      shell: df -B1G | egrep "/sysx$" | awk 'NR>=1 {gsub(/%/, "", $5); print "insert into espaciovoldb select " $2"," $3"," $4"," $5  ",\x27" $6 "\x27," "\x27" {{ ansible_host }} "\x27" }'
+      register: resultados_espacios
+
+    - name: insertando resultados en tabla
+      shell:  psql -p5434 -d aplicativo_test -c "{{ item }}"
+      loop:  "{{ resultados_espacios.stdout_lines }}"
+      delegate_to: localhost
+
+    - name: imprimiendo varibale 
+      debug:
+        msg: " este es el resultado {{ item }}"        
+      loop:  "{{ resultados_espacios.stdout_lines }}"
+

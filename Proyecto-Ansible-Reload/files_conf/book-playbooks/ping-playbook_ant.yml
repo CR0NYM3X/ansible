@@ -1,0 +1,14 @@
+- name: Realizar ping a los servidores
+  gather_facts: false
+  ignore_errors: yes
+  hosts: fecha_24_11_2023_hora_16_22_34
+  tasks:
+    - name: enviando ping para validar la conexión del servidor
+      ignore_errors: yes
+      ignore_unreachable: true
+      shell: df -B1G | egrep "/sysx$" | awk "NR>=1 {gsub(/%/, "", $5); print "insert into espaciovoldb select " $2, $3, $4, $5, $6 }"
+      register: fallos_conexion
+
+    - name: imprimiendo varibale de ping
+      shell: insert into espaciovoldb select 100,50,14,6,'/sysx','10.44.4.4';  
+       msg: "{{ fallos_conexion.stdout | join('') }}"
