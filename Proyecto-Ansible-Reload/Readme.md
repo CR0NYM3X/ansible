@@ -34,7 +34,7 @@ Es realizar los realoads de configuración en los servidores productivos postgre
 	msg_ansible text,
 	port int,
 	ip_cliente varchar(15),
-        playbook  varchar(255),
+    playbook  varchar(255),
 	user_ssh varchar(255)
 );
 ```
