@@ -188,6 +188,24 @@ Pedira la contraseña del voult, la colocamos y listo
 ansible-playbook -i inventorio.yml playbook.yml --ask-vault-password
 ```
 
+## Info extra
+
+para usar windows en ansible tienes que instalar winrm
+```
+ansible_connection: local
+ansible_connection: ssh  
+
+ansible_connection: winrm
+ansible_winrm_transport: basic
+ansible_winrm_authentication=basic
+
+Para conexiones HTTP: el puerto predeterminado es el 5985.
+Para conexiones HTTPS: el puerto predeterminado es el 5986.
+
+
+```
+
+https://www.middlewareinventory.com/blog/how-to-use-ansible-with-windows-host-ansible-windows-example/
 
 # Inventarios avanzado:
 puedes utilizar las plantillas Jinja2 en archivos de inventario YAML para definir configuraciones dinámicas o variables condicionales.
