@@ -119,3 +119,7 @@ Versión: 1.2 | Mejoras: <br>
 ```
  1.- Te permite seleccionar que playbook quieres usar, se habilito la opción y ya funciona solo le hace falta mejoras esta en  [Beta]
 ```
+Versión: 1.3 | Mejoras: <br>
+```
+ 1.- cuando ejecutas registrar_servidor.sh y agregar la ip y puerto te valida que el servidor tenga conexión, si no tiene te muestra en un mensaje y te pregunta si la quieres agregar o no
+```
